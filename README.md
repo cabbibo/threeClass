@@ -6,6 +6,13 @@ Lesson 1: Render a Cube
 
 This lesson will be almost an exact replicate of the THREE.js creating a scene tutorial, found here: http://threejs.org/docs/#Manual/Introduction/Creating_a_scene
 
+This lesson, live coded:
+
+
+Live coded Branches of this lesson:
+
+* branch
+
 Lesson 2: Sub Scenes
 
 This lesson will be centered around Object3D, and how it can be used to create pretty subscenes. It will be where we build the structure of the solar system, and 
