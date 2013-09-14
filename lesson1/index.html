@@ -1,0 +1,147 @@
+<html>
+  <head>
+    <title>My first Three.js app</title>
+    <style>canvas { width: 100%; height: 100% }</style>
+  </head>
+  <body>
+    <!--<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>-->
+
+    <div id="container"></div>
+    <script src="/three.js/build/three.js"></script>
+    <script>
+
+      // The DOM element where our renderer is going to go
+      var container;
+
+      // The things that make up a three.js scene
+      var scene, camera, renderer;
+
+      // Things specific to this scene
+      var cube, geometry, material;
+
+
+      // The Width and Height of the Screen
+      // If we wanted our container to now be the full size 
+      // of the screen, this is where we would want to change it
+      var WIDTH   = window.innerWidth;
+      var HEIGHT  = window.innerHeight;
+
+
+      init();
+
+
+      /*
+
+        setup:
+        
+        This function will set up our three.js enviornment,
+        giving us the basics of a three.js program.
+
+        It will NOT, however add anything to the scene,
+        so if we only run set up, it will do nothing!
+      
+      */
+      function setup(){
+
+
+        // Setting up our DOM container first
+        // Making sure that its at the very top
+        // and spans the entire page
+        container               = document.getElementById( 'container' );
+        container.style.width   = WIDTH;
+        container.style.height  = HEIGHT;
+        container.top           = "0px";
+        container.bottom        = "0px";
+
+        scene = new THREE.Scene();
+
+        camera = new THREE.PerspectiveCamera( 
+        
+          75,                     // FOV Angle ( vertical )
+          WIDTH / HEIGHT,         // Aspect ratio ( w / h of container )
+          0.1,                    // The Near cutoff ( make high )
+          1000                    // The Far cutoff ( make low )
+
+        );
+
+        camera.position.z = 5;
+
+
+        // Choosing the type of renderer
+        // Can do Canvas, and CSS3D renderers as well,
+        // but thats for a totally different day
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize( WIDTH , HEIGHT );
+
+        // Our renderer is incharge of putting pixels on 
+        // a canvas element, so in order to see these pixels
+        // we need to make sure that this canvas is in our container
+        container.appendChild( renderer.domElement );
+
+      }
+
+
+      /*
+  
+        initializeScene:
+
+        This function sets up and adds the things to our
+
+      */
+      function initializeScene(){
+
+        geometry  = new THREE.CubeGeometry( 
+          1 ,         // X size
+          1 ,         // Y size
+          1           // Z size
+        );
+        material  = new THREE.MeshBasicMaterial({ 
+          color: 0xc0ffee,
+          wireframe:true,
+          wireframeLinewidth: 5
+        });
+        cube      = new THREE.Mesh( geometry , material );
+        
+        scene.add(cube);
+
+      }
+
+
+
+      /*
+
+        animate:
+
+        this is what will be called every frame
+
+      */
+
+      function animate(){
+
+        // First we call a request animation frame
+        // so it will call itself at 60fps
+        requestAnimationFrame( animate );
+
+        // Every frame we rotate the cube a tiny bit
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        // Rendere the scene using the camera
+        // THIS is the magic function
+        renderer.render( scene , camera );
+
+      }
+
+
+      // Gets everything running
+      function init(){
+
+        setup();
+        initializeScene();
+        animate();
+
+      }
+    
+    </script>
+  </body>
+</html>
